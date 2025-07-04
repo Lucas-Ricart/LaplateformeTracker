@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="com.plateforme.tracker.gui.controllers.StudentController">
+    <center>
+        <VBox spacing="10" alignment="CENTER">
+            <HBox spacing="5">
+                <TextField fx:id="firstNameField" promptText="Prénom" />
+                <TextField fx:id="lastNameField" promptText="Nom" />
+                <TextField fx:id="ageField" promptText="Âge" />
+                <TextField fx:id="gradeField" promptText="Note" />
+                <Button fx:id="addButton" text="Ajouter" />
+            </HBox>
+            <TableView fx:id="studentTable" prefHeight="300" />
+        </VBox>
+    </center>
+</BorderPane>

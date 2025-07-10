@@ -1,6 +1,9 @@
 package com.plateforme.tracker;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +27,7 @@ public class StudentDAO {
      * @throws SQLException en cas d'erreur SQL
      */
     public void addStudent(Student student) throws SQLException {
-        String sql = "INSERT INTO student (first_name, last_name, age, grade) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO students (first_name, last_name, age, grade) VALUES (?, ?, ?, ?)";
         try (Connection conn = dbManager.openConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, student.getFirstName());
@@ -44,7 +47,7 @@ public class StudentDAO {
      * @throws SQLException en cas d'erreur SQL
      */
     public void updateStudent(Student student) throws SQLException {
-        String sql = "UPDATE student SET first_name=?, last_name=?, age=?, grade=? WHERE id=?";
+        String sql = "UPDATE students SET first_name=?, last_name=?, age=?, grade=? WHERE id=?";
         try (Connection conn = dbManager.openConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, student.getFirstName());
@@ -65,7 +68,7 @@ public class StudentDAO {
      * @throws SQLException en cas d'erreur SQL
      */
     public void deleteStudent(int id) throws SQLException {
-        String sql = "DELETE FROM student WHERE id=?";
+        String sql = "DELETE FROM students WHERE id=?";
         try (Connection conn = dbManager.openConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -83,7 +86,7 @@ public class StudentDAO {
      * @throws SQLException en cas d'erreur SQL
      */
     public Student getStudentById(int id) throws SQLException {
-        String sql = "SELECT * FROM student WHERE id=?";
+        String sql = "SELECT * FROM students WHERE id=?";
         try (Connection conn = dbManager.openConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
@@ -112,7 +115,7 @@ public class StudentDAO {
      */
     public List<Student> getAllStudents() throws SQLException {
         List<Student> students = new ArrayList<>();
-        String sql = "SELECT * FROM student";
+        String sql = "SELECT * FROM students";
         try (Connection conn = dbManager.openConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {

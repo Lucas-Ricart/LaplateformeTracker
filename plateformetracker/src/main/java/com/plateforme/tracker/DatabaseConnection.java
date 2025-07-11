@@ -11,9 +11,9 @@ import java.sql.SQLException;
  */
 @Deprecated
 public class DatabaseConnection {
-    private static final String URL = "jdbc:postgresql://localhost:5432/student_management";
+    private static final String URL = "jdbc:postgresql://localhost:5432/laplateforme";
     private static final String USER = "postgres"; // Remplacez par votre utilisateur
-    private static final String PASSWORD = "postgres"; // Remplacez par votre mot de passe
+    private static final String PASSWORD = "admin"; // Remplacez par votre mot de passe
     private Connection connection;
 
     /**

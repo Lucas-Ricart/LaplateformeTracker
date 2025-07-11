@@ -5,24 +5,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DAO pour la gestion des étudiants (CRUD).
+ * DAO pour gérer les étudiants dans la base de données.
  */
 public class StudentDAO {
     private final DatabaseManager dbManager;
 
-    /**
-     * Initialise le DAO avec un gestionnaire de connexion.
-     * @param dbManager Instance de DatabaseManager
-     */
     public StudentDAO(DatabaseManager dbManager) {
         this.dbManager = dbManager;
     }
 
-    /**
-     * Ajoute un étudiant à la base.
-     * @param student Étudiant à ajouter
-     * @throws SQLException en cas d'erreur SQL
-     */
+    // Ajouter un étudiant
     public void addStudent(Student student) throws SQLException {
         String sql = "INSERT INTO student (first_name, last_name, age, grade) VALUES (?, ?, ?, ?)";
         try (Connection conn = dbManager.openConnection();
@@ -30,19 +22,12 @@ public class StudentDAO {
             stmt.setString(1, student.getFirstName());
             stmt.setString(2, student.getLastName());
             stmt.setInt(3, student.getAge());
-            stmt.setFloat(4, student.getGrade());
+            stmt.setDouble(4, student.getGrade());
             stmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de l'ajout de l'étudiant : " + e.getMessage());
-            throw e;
         }
     }
 
-    /**
-     * Met à jour un étudiant existant.
-     * @param student Étudiant à mettre à jour (doit avoir un id)
-     * @throws SQLException en cas d'erreur SQL
-     */
+    // Modifier un étudiant
     public void updateStudent(Student student) throws SQLException {
         String sql = "UPDATE student SET first_name=?, last_name=?, age=?, grade=? WHERE id=?";
         try (Connection conn = dbManager.openConnection();
@@ -50,38 +35,23 @@ public class StudentDAO {
             stmt.setString(1, student.getFirstName());
             stmt.setString(2, student.getLastName());
             stmt.setInt(3, student.getAge());
-            stmt.setFloat(4, student.getGrade());
+            stmt.setDouble(4, student.getGrade());
             stmt.setInt(5, student.getId());
             stmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la mise à jour de l'étudiant : " + e.getMessage());
-            throw e;
         }
     }
 
-    /**
-     * Supprime un étudiant par son id.
-     * @param id Identifiant de l'étudiant
-     * @throws SQLException en cas d'erreur SQL
-     */
+    // Supprimer un étudiant par ID
     public void deleteStudent(int id) throws SQLException {
         String sql = "DELETE FROM student WHERE id=?";
         try (Connection conn = dbManager.openConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la suppression de l'étudiant : " + e.getMessage());
-            throw e;
         }
     }
 
-    /**
-     * Récupère un étudiant par son id.
-     * @param id Identifiant de l'étudiant
-     * @return Student ou null si non trouvé
-     * @throws SQLException en cas d'erreur SQL
-     */
+    // Récupérer un étudiant par ID
     public Student getStudentById(int id) throws SQLException {
         String sql = "SELECT * FROM student WHERE id=?";
         try (Connection conn = dbManager.openConnection();
@@ -94,25 +64,18 @@ public class StudentDAO {
                         rs.getString("first_name"),
                         rs.getString("last_name"),
                         rs.getInt("age"),
-                        rs.getFloat("grade")
+                        rs.getDouble("grade")
                     );
                 }
             }
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la récupération de l'étudiant : " + e.getMessage());
-            throw e;
         }
         return null;
     }
 
-    /**
-     * Récupère tous les étudiants.
-     * @return Liste des étudiants
-     * @throws SQLException en cas d'erreur SQL
-     */
+    // Récupérer tous les étudiants
     public List<Student> getAllStudents() throws SQLException {
         List<Student> students = new ArrayList<>();
-        String sql = "SELECT * FROM student";
+        String sql = "SELECT * FROM student ORDER BY id";
         try (Connection conn = dbManager.openConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
@@ -122,13 +85,46 @@ public class StudentDAO {
                     rs.getString("first_name"),
                     rs.getString("last_name"),
                     rs.getInt("age"),
-                    rs.getFloat("grade")
+                    rs.getDouble("grade")
                 ));
             }
-        } catch (SQLException e) {
-            System.err.println("Erreur lors de la récupération des étudiants : " + e.getMessage());
-            throw e;
         }
         return students;
+    }
+
+    // Pagination : récupérer des étudiants par page (limit, offset)
+    public List<Student> getStudentsByPage(int limit, int offset) throws SQLException {
+        List<Student> students = new ArrayList<>();
+        String sql = "SELECT * FROM student ORDER BY id LIMIT ? OFFSET ?";
+        try (Connection conn = dbManager.openConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, limit);
+            stmt.setInt(2, offset);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    students.add(new Student(
+                        rs.getInt("id"),
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getInt("age"),
+                        rs.getDouble("grade")
+                    ));
+                }
+            }
+        }
+        return students;
+    }
+
+    // Récupérer le nombre total d'étudiants
+    public int getTotalStudentsCount() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM student";
+        try (Connection conn = dbManager.openConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 0;
     }
 }

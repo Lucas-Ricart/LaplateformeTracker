@@ -35,7 +35,7 @@ public class StudentManagerApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         // À adapter selon votre configuration PostgreSQL
-        String url = "jdbc:postgresql://localhost:5432/student_management";
+        String url = "jdbc:postgresql://localhost:5432/school_management";
         String user = "postgres";
         String password = "postgres";
         dao = new StudentDAO(new DatabaseManager(url, user, password));

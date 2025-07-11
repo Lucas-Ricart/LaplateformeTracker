@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.plateforme.tracker.PageAccueilController"
+            prefWidth="696.0" prefHeight="533.0"
+            style="-fx-background-color: black;">
+
+    <children>
+        <Label layoutX="215.0" layoutY="57.0"
+               prefWidth="306.0" prefHeight="18.0"
+               text="Plateforme Tracker"
+               textFill="#29f700"
+               alignment="CENTER">
+            <font>
+                <Font name="System Bold Italic" size="24.0"/>
+            </font>
+        </Label>
+
+        <ImageView layoutX="268.0" layoutY="112.0"
+                   fitWidth="200.0" fitHeight="200.0">
+            <image>
+                <Image url="@../../../../Pictures/avatar%20github.png"/>
+            </image>
+        </ImageView>
+
+        <Label layoutX="293.0" layoutY="319.0"
+               prefWidth="150.0" prefHeight="26.0"
+               text="Utilisateur"
+               textFill="#131313"
+               alignment="CENTER"
+               style="-fx-background-color: white;"/>
+
+        <TextField fx:id="usernameField"
+                   layoutX="293.0" layoutY="356.0"
+                   promptText="Nom d'utilisateur"
+                   alignment="CENTER"/>
+
+        <PasswordField fx:id="passwordField"
+                       layoutX="293.0" layoutY="396.0"
+                       promptText="Mot de Passe"
+                       alignment="CENTER"/>
+
+        <Button fx:id="loginButton"
+                layoutX="292.0" layoutY="436.0"
+                prefWidth="150.0" prefHeight="30.0"
+                text="Connexion"
+                textFill="RED"
+                mnemonicParsing="false"
+                onAction="#handleLogin">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </Button>
+
+        <Button fx:id="signupButton"
+                layoutX="287.0" layoutY="476.0"
+                prefWidth="159.0" prefHeight="26.0"
+                text="Inscription"
+                style="-fx-background-color: red;"
+                mnemonicParsing="false"
+                onAction="#handleSignup">
+            <font>
+                <Font size="24.0"/>
+            </font>
+            <textFill>
+                <LinearGradient cycleMethod="REPEAT" endX="0.371" endY="1.0">
+                    <stops>
+                        <Stop>
+                            <color>
+                                <Color/>
+                            </color>
+                        </Stop>
+                        <Stop offset="0.316">
+                            <color>
+                                <Color/>
+                            </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                            <color>
+                                <Color red="1.0" green="1.0" blue="1.0"/>
+                            </color>
+                        </Stop>
+                    </stops>
+                </LinearGradient>
+            </textFill>
+        </Button>
+    </children>
+</AnchorPane>

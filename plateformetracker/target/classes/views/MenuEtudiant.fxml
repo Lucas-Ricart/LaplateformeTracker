@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.plateforme.tracker.MenuEtudiantController"
+      spacing="10">
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+
+    <HBox spacing="5">
+        <Label text="ID Recherche:"/>
+        <TextField fx:id="tfIdSearch" promptText="ID étudiant"/>
+        <Button fx:id="btnSearch" text="Rechercher" onAction="#handleSearch"/>
+    </HBox>
+
+    <TableView fx:id="tableViewStudents" prefHeight="300">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="50"/>
+            <TableColumn fx:id="colFirstName" text="Prénom" prefWidth="120"/>
+            <TableColumn fx:id="colLastName" text="Nom" prefWidth="120"/>
+            <TableColumn fx:id="colAge" text="Âge" prefWidth="60"/>
+            <TableColumn fx:id="colGrade" text="Note" prefWidth="80"/>
+        </columns>
+    </TableView>
+
+    <HBox spacing="5">
+        <Label text="Prénom:"/>
+        <TextField fx:id="tfFirstName" promptText="Prénom" prefWidth="120"/>
+        <Label text="Nom:"/>
+        <TextField fx:id="tfLastName" promptText="Nom" prefWidth="120"/>
+        <Label text="Âge:"/>
+        <TextField fx:id="tfAge" promptText="Âge" prefWidth="60"/>
+        <Label text="Note:"/>
+        <TextField fx:id="tfGrade" promptText="Note" prefWidth="80"/>
+    </HBox>
+
+    <HBox spacing="10" alignment="center">
+        <Button fx:id="btnAdd" text="Ajouter" onAction="#handleAdd"/>
+        <Button fx:id="btnUpdate" text="Modifier" onAction="#handleUpdate"/>
+        <Button fx:id="btnDelete" text="Supprimer" onAction="#handleDelete"/>
+    </HBox>
+
+    <HBox spacing="20" alignment="center">
+        <Button fx:id="btnPrevPage" text="← Page Précédente" onAction="#handlePrevPage"/>
+        <Label fx:id="lblPageInfo" text="Page 1 / 1"/>
+        <Button fx:id="btnNextPage" text="Page Suivante →" onAction="#handleNextPage"/>
+    </HBox>
+
+</VBox>
